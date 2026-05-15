@@ -1,0 +1,1001 @@
+openapi: "3.0.3"
+info:
+  title: "com_the_chance_honey_mart API"
+  description: "com_the_chance_honey_mart API"
+  version: "1.0.0"
+servers:
+- url: "http://10.131.79.184:8080"
+
+paths:
+  /cart:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CartModel"
+  /cart/{productId}:
+    delete:
+      description: ""
+      parameters:
+      - name: "productId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+  /cart/addProduct:
+    post:
+      description: ""
+      parameters:
+      - name: "productId"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      - name: "count"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      responses:
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+  /cart/deleteAll:
+    delete:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+  /category:
+    post:
+      description: ""
+      parameters:
+      - name: "name"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      - name: "imageId"
+        in: "query"
+        required: false
+        schema:
+          type: "integer"
+      responses:
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                type: "boolean"
+    put:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "query"
+        required: false
+        schema:
+          type: "number"
+      - name: "name"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      - name: "imageId"
+        in: "query"
+        required: false
+        schema:
+          type: "integer"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+  /category/{categoryId}:
+    delete:
+      description: ""
+      parameters:
+      - name: "categoryId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "boolean"
+  /category/{categoryId}/allProduct:
+    get:
+      description: ""
+      parameters:
+      - name: "categoryId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/ProductModel"
+  /deleteAllTables:
+    delete:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+        "500":
+          description: "Internal Server Error"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+  /files/image_uploads/{image}:
+    get:
+      description: ""
+      parameters:
+      - name: "image"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "OK <br> A file response"
+          content:
+            application/*:
+              schema:
+                type: "object"
+                format: "binary"
+        "404":
+          description: "Not Found"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "File not found"
+  /files/market/{marketId}/{image}:
+    get:
+      description: ""
+      parameters:
+      - name: "image"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      - name: "marketId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "OK <br> A file response"
+          content:
+            application/*:
+              schema:
+                type: "object"
+                format: "binary"
+        "404":
+          description: "Not Found"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "File not found"
+  /files/markets/{image}:
+    get:
+      description: ""
+      parameters:
+      - name: "image"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "OK <br> A file response"
+          content:
+            application/*:
+              schema:
+                type: "object"
+                format: "binary"
+        "404":
+          description: "Not Found"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "File not found"
+  /markets:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/MarketModel"
+    post:
+      description: "TODO: authenticate for Admin only."
+      parameters:
+      - name: "name"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      - name: "ownerId"
+        in: "query"
+        required: false
+        schema:
+          type: "number"
+      responses:
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                type: "boolean"
+  /markets/{id}:
+    delete:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "number"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+    get:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "number"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/MarketDetailsModel"
+    put:
+      description: ""
+      parameters:
+      - name: "name"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      - name: "description"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "boolean"
+  /markets/{id}/categories:
+    get:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "number"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/CategoryModel"
+  /markets/{id}/image:
+    put:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "boolean"
+  /markets/{id}/location:
+    put:
+      description: ""
+      parameters:
+      - name: "address"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      - name: "latitude"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      - name: "longitude"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "boolean"
+  /order/{id}:
+    get:
+      description: "get Order Details"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/OrderDetailsModel"
+    put:
+      description: "Update order state"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      - name: "state"
+        in: "query"
+        required: false
+        schema:
+          type: "integer"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "boolean"
+  /order/checkout:
+    post:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "boolean"
+  /order/marketOrders:
+    get:
+      description: ""
+      parameters:
+      - name: "orderState"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/MarketOrderModel"
+  /order/userOrders:
+    get:
+      description: ""
+      parameters:
+      - name: "orderState"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/UserOrderModel"
+  /owner/Profile:
+    get:
+      description: ""
+      responses:
+        "302":
+          description: "Found"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/UserModel"
+  /owner/login:
+    post:
+      description: ""
+      parameters:
+      - name: "email"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      - name: "password"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      responses:
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+  /owner/signup:
+    post:
+      description: ""
+      parameters:
+      - name: "fullName"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      - name: "email"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      - name: "password"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      responses:
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+  /product:
+    post:
+      description: ""
+      parameters:
+      - name: "name"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      - name: "price"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      - name: "description"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      - name: "categoriesId"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      responses:
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ProductModel"
+  /product/{id}:
+    delete:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "boolean"
+    put:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      - name: "name"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      - name: "price"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      - name: "description"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+  /product/{productId}:
+    get:
+      description: ""
+      parameters:
+      - name: "productId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ProductModel"
+  /product/{productId}/categories:
+    get:
+      description: ""
+      parameters:
+      - name: "productId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/CategoryModel"
+  /product/{productId}/image/{imageId}:
+    delete:
+      description: ""
+      parameters:
+      - name: "imageId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      - name: "productId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+  /product/{id}/updateCategories:
+    put:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      - name: "categoriesId"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+  /product/{productId}/uploadImages:
+    post:
+      description: ""
+      parameters:
+      - name: "productId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                type: "boolean"
+  /user/login:
+    post:
+      description: ""
+      parameters:
+      - name: "email"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      - name: "password"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      responses:
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+  /user/myProfile:
+    get:
+      description: ""
+      responses:
+        "302":
+          description: "Found"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/UserModel"
+  /user/profileImage:
+    post:
+      description: ""
+      responses:
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+  /user/signup:
+    post:
+      description: ""
+      parameters:
+      - name: "password"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      - name: "fullName"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      - name: "email"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      responses:
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+  /wishList:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/ProductModel"
+    post:
+      description: ""
+      parameters:
+      - name: "productId"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      responses:
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                type: "boolean"
+  /wishList/{productId}:
+    delete:
+      description: ""
+      parameters:
+      - name: "productId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "boolean"
+  /json/kotlinx-serialization:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+components:
+  schemas:
+    ProductWithCount:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        name:
+          type: "string"
+        count:
+          type: "integer"
+          format: "int32"
+        price:
+          type: "number"
+          format: "double"
+        images:
+          type: "array"
+          items:
+            type: "string"
+    CartModel:
+      type: "object"
+      properties:
+        products:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/ProductWithCount"
+        total:
+          type: "number"
+          format: "double"
+    ProductModel:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        name:
+          type: "string"
+        description:
+          type: "string"
+        price:
+          type: "number"
+          format: "double"
+        images:
+          type: "array"
+          items:
+            type: "string"
+    MarketModel:
+      type: "object"
+      properties:
+        marketId:
+          type: "integer"
+          format: "int64"
+        marketName:
+          type: "string"
+        imageUrl:
+          type: "string"
+        description:
+          type: "string"
+        address:
+          type: "string"
+        latitude:
+          type: "number"
+          format: "double"
+        longitude:
+          type: "number"
+          format: "double"
+    CategoryModel:
+      type: "object"
+      properties:
+        categoryId:
+          type: "integer"
+          format: "int64"
+        categoryName:
+          type: "string"
+        imageId:
+          type: "integer"
+          format: "int32"
+    MarketDetailsModel:
+      type: "object"
+      properties:
+        marketId:
+          type: "integer"
+          format: "int64"
+        marketName:
+          type: "string"
+        imageUrl:
+          type: "string"
+        description:
+          type: "string"
+        address:
+          type: "string"
+        latitude:
+          type: "number"
+          format: "double"
+        longitude:
+          type: "number"
+          format: "double"
+        categories:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/CategoryModel"
+    OrderDetailsModel:
+      type: "object"
+      properties:
+        orderId:
+          type: "integer"
+          format: "int64"
+        userId:
+          type: "integer"
+          format: "int64"
+        marketId:
+          type: "integer"
+          format: "int64"
+        products:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/ProductWithCount"
+        totalPrice:
+          type: "number"
+          format: "double"
+        date:
+          type: "string"
+        state:
+          type: "integer"
+          format: "int32"
+    UserModel:
+      type: "object"
+      properties:
+        userId:
+          type: "integer"
+          format: "int64"
+        fullName:
+          type: "string"
+        email:
+          type: "string"
+        profileImage:
+          type: "string"
+    MarketOrderModel:
+      type: "object"
+      properties:
+        orderId:
+          type: "integer"
+          format: "int64"
+        totalPrice:
+          type: "number"
+          format: "double"
+        state:
+          type: "integer"
+          format: "int32"
+        date:
+          type: "integer"
+          format: "int64"
+        user:
+          $ref: "#/components/schemas/UserModel"
+    UserOrderModel:
+      type: "object"
+      properties:
+        orderId:
+          type: "integer"
+          format: "int64"
+        totalPrice:
+          type: "number"
+          format: "double"
+        state:
+          type: "integer"
+          format: "int32"
+        date:
+          type: "integer"
+          format: "int64"
+        market:
+          $ref: "#/components/schemas/MarketModel"
+        numItems:
+          type: "integer"
+          format: "int64"
